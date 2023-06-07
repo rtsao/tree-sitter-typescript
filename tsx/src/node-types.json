@@ -2183,6 +2183,10 @@
         {
           "type": "_primary_type",
           "named": true
+        },
+        {
+          "type": "function_type",
+          "named": true
         }
       ]
     }
