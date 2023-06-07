@@ -1494,3 +1494,25 @@ type X2 = (typeof Y)[keyof typeof Z];
       (index_type_query
         (type_query
           (identifier))))))
+
+==========
+Flow stuff
+==========
+
+type foo = ?number;
+type Foo = ?(SomeType) => number;
+
+---
+
+(program
+    (type_alias_declaration
+    (type_identifier)
+    (flow_maybe_type
+        (predefined_type)))
+    (type_alias_declaration
+    (type_identifier)
+    (function_type
+        (formal_parameters
+        (required_parameter
+            (identifier)))
+        (predefined_type))))

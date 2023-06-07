@@ -40,7 +40,7 @@ module.exports = function defineGrammar(dialect) {
       ['unary', 'assign'],
       ['declaration', $.expression],
       [$.predefined_type, $.unary_expression],
-      [$._type, $.flow_maybe_type],
+      [$._type, $.flow_maybe_type, $._flow_maybe_function_type],
       [$.tuple_type, $.array_type, $.pattern, $._type],
       [$.readonly_type, $.pattern],
       [$.readonly_type, $.primary_expression],
@@ -631,6 +631,7 @@ module.exports = function defineGrammar(dialect) {
 
       _type: $ => choice(
         $._primary_type,
+        $._flow_maybe_function_type,
         $.function_type,
         $.readonly_type,
         $.constructor_type,
@@ -819,7 +820,9 @@ module.exports = function defineGrammar(dialect) {
 
       existential_type: $ => '*',
 
-      flow_maybe_type: $ => prec.right(seq( '?', $._primary_type)),
+      _flow_maybe_function_type: $ => prec.right(seq('?', $.function_type)),
+
+      flow_maybe_type: $ => prec.right(seq('?', $._primary_type)),
 
       parenthesized_type: $ => seq(
         '(', $._type, ')'
